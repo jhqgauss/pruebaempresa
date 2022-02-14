@@ -16,6 +16,25 @@ def registrarempresa(request):
     return redirect('/')
 
 
+def edicionempresa(request,nit):
+    empresa=Modelo.objects.get(nit=nit)
+    return (render(request, "edicionempresa.html",{"empresa":empresa}))
+
+
+def editarempresa(request):
+    nombre=request.POST['nombreempresa']
+    nit=request.POST['nitempresa']
+    direccion=request.POST['direempresa']
+    telefono=request.POST['telempresa']
+
+    empresa=Modelo.objects.get(nit=nit)
+    empresa.nombre=nombre
+    empresa.nit=nit
+    empresa.direccion=direccion
+    empresa.telefono=telefono
+    empresa.save()
+    return redirect('/')
+
 def eliminarempresa(request,nit):
     empresa=Modelo.objects.get(nit=nit)
     empresa.delete()
